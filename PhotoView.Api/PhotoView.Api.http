@@ -1,0 +1,5 @@
+@PhotoView.Api_HostAddress = http://localhost:5142
+
+GET {{PhotoView.Api_HostAddress}}/Images?page=1&limit=10
+Accept: application/json
+x-svc-auth-key: 3a23031c62cb4517e48bd5c5ca4c9e96
