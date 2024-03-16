@@ -10,7 +10,7 @@ public partial class App : Application
 	public IHost AppHost { get; } = Host.CreateDefaultBuilder()
 		.ConfigureServices(ConfigureServices)
 		.Build();
-		
+
 	protected override async void OnStartup(StartupEventArgs e)
 	{
 		await AppHost.StartAsync();

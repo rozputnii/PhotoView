@@ -2,5 +2,5 @@
 
 public record AuthConfig
 {
-    public string? ImagesApiAuthKey { get; init; }
+	public string? ImagesApiAuthKey { get; init; }
 }

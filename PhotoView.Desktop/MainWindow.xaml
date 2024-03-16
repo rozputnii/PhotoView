@@ -8,14 +8,13 @@
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
         Title="MainWindow" Height="620" Width="890"
- 
+
         viewModels:LoadedBindings.LoadedEnabled="True"
-        viewModels:LoadedBindings.LoadedCommand="{Binding LoadImagesCommand, Mode=OneWay}"
-        >
+        viewModels:LoadedBindings.LoadedCommand="{Binding LoadImagesCommand, Mode=OneWay}">
   <Window.InputBindings>
     <KeyBinding Key="F5"
                 Command="{Binding LoadImagesCommand, Mode=OneWay}"
-                CommandParameter="You pressed 'F5'"/>
+                CommandParameter="You pressed 'F5'" />
   </Window.InputBindings>
   <Grid Background="LightBlue">
     <ScrollViewer x:Name="ScrollViewerCrm" Margin="0,0,1,0"
@@ -31,22 +30,22 @@
         <ItemsControl.ItemTemplate>
           <DataTemplate>
             <Grid Margin="5,5,5,5">
-              <Image 
-                     Source="{Binding ImageSource, Mode=OneWay}"
-                     UseLayoutRounding="True"
-                     Stretch="UniformToFill"
-                     Height="300"
-                     Width="200">
+              <Image
+                Source="{Binding ImageSource, Mode=OneWay}"
+                UseLayoutRounding="True"
+                Stretch="UniformToFill"
+                Height="300"
+                Width="200">
                 <Image.Clip>
                   <RectangleGeometry RadiusX="20"
                                      RadiusY="20"
                                      Rect="0,0,200,300" />
                 </Image.Clip>
               </Image>
-              <TextBlock HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Top" Padding="10,10,10,10" 
+              <TextBlock HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Top" Padding="10,10,10,10"
                          MaxWidth="200"
-                         FontSize="24"  TextTrimming="CharacterEllipsis"
-                         Text="{Binding Name, Mode=OneWay}"/>
+                         FontSize="24" TextTrimming="CharacterEllipsis"
+                         Text="{Binding Name, Mode=OneWay}" />
             </Grid>
           </DataTemplate>
         </ItemsControl.ItemTemplate>

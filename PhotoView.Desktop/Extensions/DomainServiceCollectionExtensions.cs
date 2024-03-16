@@ -6,6 +6,7 @@ using PhotoView.Desktop.Services;
 using PhotoView.Desktop.Services.Implementation;
 using Polly;
 using Polly.Extensions.Http;
+
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DesktopServiceCollectionExtensions
@@ -19,17 +20,17 @@ public static class DesktopServiceCollectionExtensions
 			.AddImageApiHttpClient(configuration)
 			;
 
-
 		return services;
 	}
 
-	public static IServiceCollection AddImageApiHttpClient(this IServiceCollection services, IConfiguration configuration)
+	public static IServiceCollection AddImageApiHttpClient(this IServiceCollection services,
+		IConfiguration configuration)
 	{
 		services.AddTransient<ImageApiAuthHandler>();
 
 		var retryPolicy = HttpPolicyExtensions
-		   .HandleTransientHttpError()
-		   .WaitAndRetryAsync(new[] { TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5), });
+			.HandleTransientHttpError()
+			.WaitAndRetryAsync(new[] { TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5) });
 
 		var noOpPolicy = Policy.NoOpAsync().AsAsyncPolicy<HttpResponseMessage>();
 

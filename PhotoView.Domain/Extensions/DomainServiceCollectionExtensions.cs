@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using PhotoView.Domain.Models;
 using Polly;
 using Polly.Extensions.Http;
-using PhotoView.Domain.Models;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -17,11 +17,12 @@ public static class DomainServiceCollectionExtensions
 		return services;
 	}
 
-	public static IServiceCollection AddPicsumApiHttpClient(this IServiceCollection services, IConfiguration configuration)
+	public static IServiceCollection AddPicsumApiHttpClient(this IServiceCollection services,
+		IConfiguration configuration)
 	{
 		var retryPolicy = HttpPolicyExtensions
-		   .HandleTransientHttpError()
-		   .WaitAndRetryAsync(new[] { TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5), });
+			.HandleTransientHttpError()
+			.WaitAndRetryAsync(new[] { TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5) });
 
 		var noOpPolicy = Policy.NoOpAsync().AsAsyncPolicy<HttpResponseMessage>();
 

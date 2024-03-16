@@ -12,9 +12,6 @@ public class ImagesController(IMediator mediator) : ControllerBase
 	public async Task<IActionResult> Get(int? page, int limit)
 	{
 		var result = await mediator.Send(new GetImages(page, limit));
-		if (!result.Any())
-			return NotFound();
-
 		return Ok(result);
 	}
 }

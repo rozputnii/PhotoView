@@ -10,17 +10,32 @@ public class LoadedBindings
 			"LoadedEnabled",
 			typeof(bool),
 			typeof(LoadedBindings),
-			new PropertyMetadata(false, new PropertyChangedCallback(OnLoadedEnabledPropertyChanged)));
+			new PropertyMetadata(false, OnLoadedEnabledPropertyChanged));
 
-	public static bool GetLoadedEnabled(DependencyObject sender) => (bool)sender.GetValue(LoadedEnabledProperty);
-	public static void SetLoadedEnabled(DependencyObject sender, bool value) => sender.SetValue(LoadedEnabledProperty, value);
+
+	public static readonly DependencyProperty LoadedCommandProperty =
+		DependencyProperty.RegisterAttached(
+			"LoadedCommand",
+			typeof(ICommand),
+			typeof(LoadedBindings),
+			new PropertyMetadata(null));
+
+	public static bool GetLoadedEnabled(DependencyObject sender)
+	{
+		return (bool)sender.GetValue(LoadedEnabledProperty);
+	}
+
+	public static void SetLoadedEnabled(DependencyObject sender, bool value)
+	{
+		sender.SetValue(LoadedEnabledProperty, value);
+	}
 
 	private static void OnLoadedEnabledPropertyChanged(object sender, DependencyPropertyChangedEventArgs e)
 	{
 		if (sender is Window w)
 		{
-			bool newEnabled = (bool)e.NewValue;
-			bool oldEnabled = (bool)e.OldValue;
+			var newEnabled = (bool)e.NewValue;
+			var oldEnabled = (bool)e.OldValue;
 
 			if (oldEnabled && !newEnabled)
 				w.Loaded -= WindowLoaded;
@@ -31,18 +46,17 @@ public class LoadedBindings
 
 	private static void WindowLoaded(object sender, RoutedEventArgs e)
 	{
-		ICommand loadedAction = GetLoadedCommand((Window)sender);
+		var loadedAction = GetLoadedCommand((Window)sender);
 		loadedAction?.Execute(sender);
 	}
 
+	public static ICommand GetLoadedCommand(DependencyObject sender)
+	{
+		return (ICommand)sender.GetValue(LoadedCommandProperty);
+	}
 
-	public static readonly DependencyProperty LoadedCommandProperty =
-		DependencyProperty.RegisterAttached(
-			"LoadedCommand",
-			typeof(ICommand),
-			typeof(LoadedBindings),
-			new PropertyMetadata(null));
-
-	public static ICommand GetLoadedCommand(DependencyObject sender) => (ICommand)sender.GetValue(LoadedCommandProperty);
-	public static void SetLoadedCommand(DependencyObject sender, ICommand value) => sender.SetValue(LoadedCommandProperty, value);
+	public static void SetLoadedCommand(DependencyObject sender, ICommand value)
+	{
+		sender.SetValue(LoadedCommandProperty, value);
+	}
 }
